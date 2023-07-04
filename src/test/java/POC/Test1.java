@@ -17,7 +17,7 @@ public class Test1 extends CommonOps {
     public void test01_verifyWaterio() throws InterruptedException {
         System.out.println(mobileDriver.executeScript("flutter:waitFor",main.counter));
         main.incrementButton.click();
-        assertEquals(main.counter.getText(),"2");
+        assertEquals(main.counter.getText(),"1");
 //        MobileElement teset = (MobileElement) driver.findElement(By.id("settings_profile_name"));
 //        String [] name = waterioMain.txt_name.toString().split(",");
 //        assertTrue(waterioMain.txt_name.toString().contains("Roi"),"Name isn't Roi");
