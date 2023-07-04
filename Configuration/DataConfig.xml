@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Environment>
+    <!--Timeout-->
+    <Timeout>5</Timeout>
+
+    <!--General-->
+    <PlatformName>mobile</PlatformName>
+
+    <!--Authorization-->
+<!--    <UserName>admin</UserName>-->
+<!--    <Password>admin</Password>-->
+
+    <!--web-->
+<!--    <BrowserName>chrome</BrowserName>-->
+<!--    <LoggingUrl>http://localhost:3000/</LoggingUrl>-->
+<!--    <ImageRepo>C:\\Automation\\FinalProject2\\ImageRepository\\</ImageRepo>-->
+
+    <!-- Data Driver Testing-->
+    <DDTFile>./DDTFiles/users.csv</DDTFile>
+
+    <!--Mobile-->
+    <UDID>ZPGUJ76XUWQGJRKJ</UDID>
+<!--    <AppPackage>io.water.hydration</AppPackage>-->
+    <AppPackage>com.example.test_app</AppPackage>
+    <AppActivity>.MainActivity</AppActivity>
+    <AppiumServer>http://localhost:4723/wd/hub</AppiumServer>
+
+    <!--API-->
+<!--    <urlAPI>http://localhost:3000/</urlAPI>-->
+
+    <!--Electron-->
+<!--    <ElectronDriverPath>./Drivers/electrondriver.exe</ElectronDriverPath>-->
+<!--    <ElectronAppPath>C:/Users/roish/AppData/Local/Programs/todolist/Todolist.exe</ElectronAppPath>-->
+
+
+</Environment>
