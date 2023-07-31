@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Water-io-Automation-master/Water-io-Automation.iml" filepath="$PROJECT_DIR$/Water-io-Automation-master/Water-io-Automation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Water-io-Automation-master.iml" filepath="$PROJECT_DIR$/.idea/Water-io-Automation-master.iml" />
+    </modules>
+  </component>
+</project>
