@@ -1,6 +1,7 @@
 package pageObjects;
 
 import io.appium.java_client.AppiumDriver;
+import io.github.ashwith.flutter.FlutterElement;
 import utilities.CommonOps;
 
 public class Settings extends CommonOps {
@@ -9,5 +10,6 @@ public class Settings extends CommonOps {
         this.mobileDriver = mobileDriver;
 //        PageFactory.initElements(new AppiumFieldDecorator(mobileDriver), this);
     }
+
 
 }

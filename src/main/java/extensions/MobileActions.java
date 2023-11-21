@@ -1,11 +1,19 @@
 package extensions;
 
 //import io.appium.java_client.MobileElement;
+import com.google.common.collect.ImmutableList;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.TouchAction;
 //import io.appium.java_client.android.AndroidDriver;
 //import io.appium.java_client.android.WebElement;
+//import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
+import io.appium.java_client.touch.LongPressOptions;
+import io.github.ashwith.flutter.FlutterElement;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import io.appium.java_client.touch.TapOptions;
 import io.appium.java_client.touch.WaitOptions;
@@ -13,18 +21,58 @@ import io.appium.java_client.touch.offset.ElementOption;
 import io.appium.java_client.touch.offset.PointOption;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.bidi.log.Log;
+import org.openqa.selenium.devtools.v111.input.model.MouseButton;
+import org.openqa.selenium.interactions.Pause;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import utilities.CommonOps;
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.HashMap;
+
 
 public class MobileActions extends CommonOps {
 
     @Step("Tap on element")
-    public static void tap(WebElement elem){
-        wait.until(ExpectedConditions.elementToBeClickable(elem));
-        TouchAction action = new TouchAction((PerformsTouchActions) mobileDriver);
-        action.tap((new TapOptions()).withElement(ElementOption.element(elem))).perform();
+    public static void tap(FlutterElement elem){
+//        wait.until(ExpectedConditions.elementToBeClickable(elem));
+//        TouchAction action = new TouchAction((PerformsTouchActions) mobileDriver);
+//        action.tap((new TapOptions()).withElement(ElementOption.element(elem))).perform();
+        tapByCoordinate(elem.getLocation().x,elem.getLocation().y);
+
     }
+    private static void tapByCoordinate(int x, int y) {
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence tap = new Sequence(finger, 1);
+        tap.addAction(finger.createPointerMove(Duration.ofMillis(0), PointerInput.Origin.viewport(), x, y));
+        tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+        mobileDriver.perform(Arrays.asList(tap));
+    }
+
+
+    public static void startPress(BtnPress click, FlutterElement elem, AppiumDriver driver) {
+        HashMap<String, Object> stringObjectsHashMap = new HashMap<>();
+        stringObjectsHashMap.put("durationMilliseconds", click.getDuration());
+        stringObjectsHashMap.put("frequency", 30);
+        driver.executeScript("flutter:longTap", elem, stringObjectsHashMap);
+    }
+
+    public enum BtnPress {
+        CLICK(100),
+        LONG_CLICK(1000);
+        private final int duration;
+        BtnPress(int duration) {
+            this.duration = duration;
+        }
+        public int getDuration() {
+            return duration;
+        }
+    }
+
+
 
     @Step("Swipe")
     public static void swipe(Direction dir) {
@@ -71,7 +119,8 @@ public class MobileActions extends CommonOps {
                     // a bit more reliable when we add small wait
                     .waitAction(WaitOptions.waitOptions(Duration.ofMillis(PRESS_TIME)))
                     .moveTo(pointOptionEnd)
-                    .release().perform();
+                    .release()
+                    .perform();
         } catch (Exception e) {
             System.err.println("swipeScreen(): TouchAction FAILED\n" + e.getMessage());
             return;

@@ -1,5 +1,6 @@
 package utilities;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
@@ -19,7 +20,10 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import io.appium.java_client.remote.SupportsContextSwitching;
+
 
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.RESET_KEYBOARD;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.UNICODE_KEYBOARD;
@@ -43,20 +47,22 @@ public class CommonOps extends Base{
         doc.getDocumentElement().normalize();
         return doc.getElementsByTagName(nodeName).item(0).getTextContent();
     }
+
     public static void initMobile() throws MalformedURLException {
                 uiAutomator2Options
                 .setPlatformName(ANDROID)
                 .setUdid("ZPGUJ76XUWQGJRKJ")
                 .setPlatformVersion("12")
                 .setAutoGrantPermissions(true)
-                .setNoReset(false)
+                .setNoReset(true)
                 .setNewCommandTimeout(Duration.ofMinutes(5))
                 .setAppActivity(".MainActivity")
-                .setAppPackage("com.example.test_app")
+                .setAppPackage("io.water.hydration")
                 .setAutomationName("Flutter")
-                .amend(UNICODE_KEYBOARD, true)
+                .amend(UNICODE_KEYBOARD, false)
                 .amend(RESET_KEYBOARD, true);
-         mobileDriver = new AndroidDriver(new AppiumServiceBuilder()
+        mobileDriver = new AndroidDriver(new AppiumServiceBuilder()
+//        mobileDriver = new AppiumDriver(new AppiumServiceBuilder()
                 .usingPort(4723)
                 .withIPAddress("127.0.0.1")
                 .build(), uiAutomator2Options);
@@ -64,7 +70,9 @@ public class CommonOps extends Base{
         ManagePages.pageObjects();
         mobileDriver.manage().timeouts().implicitlyWait(Long.parseLong(getData("Timeout")), TimeUnit.SECONDS);
         wait = new WebDriverWait(mobileDriver, Duration.ofSeconds(Long.parseLong(getData("Timeout"))));
+        ((SupportsContextSwitching) mobileDriver).getContextHandles();
     }
+
 
         @BeforeClass
         public void startSession () throws Exception {

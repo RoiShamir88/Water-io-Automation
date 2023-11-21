@@ -22,6 +22,7 @@ public class Base {
     //----------------------------------------------Mobile
     protected static AppiumDriver mobileDriver;
     protected static AndroidDriver driver;
+
     protected static DesiredCapabilities dc = new DesiredCapabilities();
     protected static UiAutomator2Options uiAutomator2Options = new UiAutomator2Options();
     protected static FlutterFinder finder;
